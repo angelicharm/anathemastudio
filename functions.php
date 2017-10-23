@@ -11,11 +11,13 @@ if ( !function_exists( 'chld_thm_cfg_parent_css' ) ):
     }
 endif;
 add_action( 'wp_enqueue_scripts', 'chld_thm_cfg_parent_css', 10 );
-
-// LA ADDED THE FOLLOWING FUNCTION TO LOCATE CHILD STYLESHEET DIRECTORY
-function my_child_theme_setup() {
-    load_child_theme_textdomain( 'zerif-lite-child', get_stylesheet_directory() );
-}
+         
+if ( !function_exists( 'child_theme_configurator_css' ) ):
+    function child_theme_configurator_css() {
+        wp_enqueue_style( 'chld_thm_cfg_separate', trailingslashit( get_stylesheet_directory_uri() ) . 'ctc-style.css', array( 'chld_thm_cfg_parent','zerif_style','zerif_responsive_style' ) );
+    }
+endif;
+add_action( 'wp_enqueue_scripts', 'child_theme_configurator_css' );
 
 // END ENQUEUE PARENT ACTION
 
